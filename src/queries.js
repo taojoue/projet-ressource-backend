@@ -69,19 +69,19 @@ const updateUsers = (request, response) => {
     })
 }
 
-const motDePasseUtilisateur="mdptest";
-const hash=bcrypt.hashSync(motDePasseUtilisateur,1);
+// const motDePasseUtilisateur="mdptest";
+// const hash=bcrypt.hashSync(motDePasseUtilisateur,1);
 
 
-console.log(motDePasseUtilisateur);
-console.log(hash);
+// console.log(motDePasseUtilisateur);
+// console.log(hash);
 
 
-const comparaisonMdp= bcrypt.compare(motDePasseUtilisateur, hash, function(err, res){
-    if (res) console.log('Le MDP est bueno'); 
-    if (err) console.log('erreur de mot de passe');
-    return;
-})
+// const comparaisonMdp= bcrypt.compare(motDePasseUtilisateur, hash, function(err, res){
+//     if (res) console.log('Le MDP est bueno'); 
+//     if (err) console.log('erreur de mot de passe');
+//     return;
+// })
 
 module.exports = {
     getUsers,
