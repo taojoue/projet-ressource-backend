@@ -19,6 +19,7 @@
   "homepage": "https://github.com/taojoue/projet-re-source-backend#readme",
   "dependencies": {
     "dotenv": "^16.0.0",
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "pg-pool": "^3.5.1"
   }
 }
