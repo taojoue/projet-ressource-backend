@@ -1,1 +1,0 @@
-Backend du projet ressources
