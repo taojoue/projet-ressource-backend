@@ -47,6 +47,32 @@ const createUser = (request, response) => {
     })
 }
 
+const addUsers = (request, response) => {
+    const nomUtilisateur="Elies"
+    pool.query('INSERT INTO "Compte" ("nomUtilisateur") VALUES ($1)', [nomUtilisateur], (error, results) => {
+        if (error) {
+            throw error
+        }        
+        response.status(304).json(results.rows)
+    })
+}
+
+const motDePasseUtilisateur="mdptest";
+const hash=bcrypt.hashSync(motDePasseUtilisateur,1);
+
+
+console.log(motDePasseUtilisateur);
+console.log(hash);
+
+
+const comparaisonMdp= bcrypt.compare(motDePasseUtilisateur, hash, function(err, res){
+    if (res) console.log('Le MDP est bueno'); 
+    if (err) console.log('erreur de mot de passe');
+    return;
+})
+
+
+
 const updateUsers = (request, response) => {
     const { name } = request.body;
     console.log(name);
@@ -63,5 +89,6 @@ module.exports = {
     getUsers,
     getUserById,
     createUser,
-    updateUsers
+    updateUsers,
+    addUsers
 }
