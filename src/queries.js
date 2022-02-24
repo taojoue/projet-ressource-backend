@@ -3,12 +3,12 @@ require('dotenv').config();
 
 const Pool = require('pg-pool');
 const pool = new Pool({
-    user: 'zmbvngajlkmudl',
-    host: 'ec2-3-225-79-57.compute-1.amazonaws.com',
-    database: 'dec6ngf50lhrha',
-    password: '29d4d2dddff5ffa32b1bc8b09bce05989e41f1c8c26f27a0d58fbbbbb938d19c',
-    port: 5432,
-    connectionString: "postgres://zmbvngajlkmudl:29d4d2dddff5ffa32b1bc8b09bce05989e41f1c8c26f27a0d58fbbbbb938d19c@ec2-3-225-79-57.compute-1.amazonaws.com:5432/dec6ngf50lhrha",
+    user: process.env.DATABASE_USER,
+    host: process.env.DATABAS_HOST,
+    database: process.env.DATABASE_NAME,
+    password: process.env.DATABASE_PASSWORD,
+    port: process.env.DATABASE_PORT,
+    connectionString: process.env.DATABASE_URL,
     ssl: {
         rejectUnauthorized: false
     }
