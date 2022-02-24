@@ -23,5 +23,7 @@ app.listen(port, () => {
 
 app.get('/users', db.getUsers);
 app.get('/addUsers', db.addUsers);
-app.get('/users/:id', db.getUserById);
-app.get('/updateUsers/:name', db.updateUsers);
+// app.get('/users/:id', db.getUserById);
+// app.get('/updateUsers/:name', db.updateUsers);
+app.get('/updateUsers', db.updateUsers);
+app.get('/getNbrCommentaires', db.getNbrCommentaires);
