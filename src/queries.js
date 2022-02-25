@@ -1,5 +1,7 @@
 // import { Pool } from "pg";
+import("./other.js");
 require('dotenv').config();
+
 
 const Pool = require('pg-pool');
 const pool = new Pool({
@@ -14,7 +16,7 @@ const pool = new Pool({
     }
 });
 
-const message = console.log('Test bonjour');
+const message = console.log('Test queries.js');
 
 const getUsers = (request, response) => {
     pool.query('SELECT * FROM compte', (error, results) => {
@@ -53,7 +55,8 @@ const addUsers = (request, response) => {
     const prenomUtilisateur="Elies";
     const nomUtilisateur="TEST";
     const pseudoUtilisateur="elitesto";
-    const mdpUtilisateur="1234567890";
+    const mdpUtilisateur="mdptest";
+    // const mdpCrypte = bcrypt.hashSync(mdpUtilisateur,1);
 
     pool.query('INSERT INTO compte ("prenomUtilisateur","nomUtilisateur","pseudoUtilisateur","mdpUtilisateur") VALUES ($1,$2,$3,$4) RETURNING * ', [prenomUtilisateur,nomUtilisateur,pseudoUtilisateur,mdpUtilisateur], (error, results) => {
         if (error) {
@@ -85,6 +88,7 @@ const getNbrCommentaires = (request, response) => {
         // response.redirect('/users')
     })
 }
+
 // const updateUsers2 = (request, response) => {
 //     const { name } = request.body;
 //     console.log(name);
@@ -96,20 +100,6 @@ const getNbrCommentaires = (request, response) => {
 //         response.redirect('/users');
 //     })
 // }
-
-
-
-// const motDePasseUtilisateur="mdptest";
-// const motDePasseCrypte = bcrypt.hashSync(motDePasseUtilisateur,1);
-
-// console.log(motDePasseUtilisateur);
-// console.log(motDePasseCrypte);
-
-// const comparaisonMdp= bcrypt.compare(motDePasseUtilisateur, motDePasseCrypte, function(err, res){
-//     if (res) console.log('Le MDP est bueno'); 
-//     if (err) console.log('erreur de mot de passe');
-//     return;
-// })
 
 module.exports = {
     message,

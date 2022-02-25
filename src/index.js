@@ -1,5 +1,3 @@
-// const { compare } = require('bcryptjs');
-// const bcrypt = require('bcryptjs/dist/bcrypt');
 const db = require('./queries');
 const express = require('express');
 const bodyParser = require('body-parser');
