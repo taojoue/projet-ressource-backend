@@ -1,6 +1,9 @@
 // import { Pool } from "pg";
 import("./other.js");
 require('dotenv').config();
+//// Hash mdp (à enlever et récupérer directement dans 'other.js')
+const { compare } = require('bcryptjs');
+const bcrypt = require('bcryptjs/dist/bcrypt');
 
 
 const Pool = require('pg-pool');
