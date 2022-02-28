@@ -25,3 +25,7 @@ app.get('/addUsers', db.addUsers);
 // app.get('/updateUsers/:name', db.updateUsers);
 app.get('/updateUsers', db.updateUsers);
 app.get('/getNbrCommentaires', db.getNbrCommentaires);
+app.get('/addRessources', db.addRessources);
+app.get('/deleteRessources', db.deleteRessources);
+app.get('/getRessources', db.getRessources);
+app.get('/updateRessources', db.updateRessources);

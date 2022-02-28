@@ -1,5 +1,5 @@
 // import { Pool } from "pg";
-import("./other.js");
+//import("./other.js");
 require('dotenv').config();
 //// Hash mdp (à enlever et récupérer directement dans 'other.js')
 const { compare } = require('bcryptjs');
@@ -20,13 +20,40 @@ const pool = new Pool({
 });
 
 const message = console.log('Test queries.js');
-
+//////////////////////////////////////////////////////////  U S E R //////////////////////////////////////////////////////////////////////////
 const getUsers = (request, response) => {
     pool.query('SELECT * FROM compte', (error, results) => {
         if (error) {
             throw error
         }
         response.status(200).json(results.rows);
+    })
+}
+
+const addUsers = (request, response) => {
+    const prenomUtilisateur="Elies";
+    const nomUtilisateur="TEST";
+    const pseudoUtilisateur="elitesto";
+    const mdpUtilisateur="mdptest";
+    // const mdpCrypte = bcrypt.hashSync(mdpUtilisateur,1);
+
+    pool.query('INSERT INTO compte ("prenomUtilisateur","nomUtilisateur","pseudoUtilisateur","mdpUtilisateur","dateCreationUtilisateur") VALUES ($1,$2,$3,$4,NOW()) RETURNING * ', [prenomUtilisateur,nomUtilisateur,pseudoUtilisateur,mdpUtilisateur], (error, results) => {
+        if (error) {
+            throw error
+        }        
+        response.status(200).json(results.rows)
+    })
+}
+
+
+const updateUsers = (request, response) => {
+    const nouveauPrenom="WWWWWWAAAAAAAAAAAAEEEEEEEEEEE";
+    pool.query('UPDATE compte SET "prenomUtilisateur" = $1 WHERE "idCompte"=2 RETURNING "idCompte", "prenomUtilisateur", NOW() ', [nouveauPrenom], (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.status(200).json(results.rows);
+        // response.redirect('/users')
     })
 }
 
@@ -54,44 +81,6 @@ const getUsers = (request, response) => {
 //     })
 // }
 
-const addUsers = (request, response) => {
-    const prenomUtilisateur="Elies";
-    const nomUtilisateur="TEST";
-    const pseudoUtilisateur="elitesto";
-    const mdpUtilisateur="mdptest";
-    // const mdpCrypte = bcrypt.hashSync(mdpUtilisateur,1);
-
-    pool.query('INSERT INTO compte ("prenomUtilisateur","nomUtilisateur","pseudoUtilisateur","mdpUtilisateur") VALUES ($1,$2,$3,$4) RETURNING * ', [prenomUtilisateur,nomUtilisateur,pseudoUtilisateur,mdpUtilisateur], (error, results) => {
-        if (error) {
-            throw error
-        }        
-        response.status(200).json(results.rows)
-    })
-}
-
-
-const updateUsers = (request, response) => {
-    const nouveauPrenom="WWWWWWAAAAAAAAAAAAEEEEEEEEEEE";
-    pool.query('UPDATE compte SET "prenomUtilisateur" = $1 WHERE "idCompte"=2 RETURNING "idCompte", "prenomUtilisateur", NOW() ', [nouveauPrenom], (error, results) => {
-        if (error) {
-            throw error
-        }
-        response.status(200).json(results.rows);
-        // response.redirect('/users')
-    })
-}
-
-const getNbrCommentaires = (request, response) => {
-    const idUser="2";
-    pool.query('SELECT count(commentaire."idCommentaire") FROM commentaire, compte WHERE compte."idCompte"=$1', [idUser], (error, results) => {
-        if (error) {
-            throw error
-        }
-        response.status(200).json(results.rows);
-        // response.redirect('/users')
-    })
-}
-
 // const updateUsers2 = (request, response) => {
 //     const { name } = request.body;
 //     console.log(name);
@@ -103,6 +92,63 @@ const getNbrCommentaires = (request, response) => {
 //         response.redirect('/users');
 //     })
 // }
+//////////////////////////////////////////////////////////  C O M M E N T A I R E /////////////////////////////////////////////////////////////////
+const getNbrCommentaires = (request, response) => {
+    const idUser="2";
+    pool.query('SELECT count(commentaire."idCommentaire") FROM commentaire, compte WHERE compte."idCompte"=$1', [idUser], (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.status(200).json(results.rows);
+        // response.redirect('/users')
+    })
+}
+
+//////////////////////////////////////////////////////////  R E S S O U R C E S /////////////////////////////////////////////////////////////////
+const getRessources = (request, response) => {
+    pool.query('SELECT * FROM ressource WHERE "lienRessource" is not null ORDER BY "dateRessource" asc ', (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.status(200).json(results.rows);
+    })
+}
+
+const addRessources = (request, response) => {
+    const titreRessouce="test";
+    const categorieRessource="ttest";
+    const typeRessource="tttest";
+    const typeRelationRessource="ttttest";
+    const lienRessource="ttttestLIENRESSOURCE";
+    // const mdpCrypte = bcrypt.hashSync(mdpUtilisateur,1);
+
+    pool.query('INSERT INTO ressource ("titreRessource","categorieRessource","typeRessource","typeRelationRessource","favorisRessource","dateRessource","lienRessource") VALUES ($1,$2,$3,$4,false,NOW(),$5) RETURNING * ', [titreRessouce,categorieRessource,typeRessource,typeRelationRessource,lienRessource], (error, results) => {
+        if (error) {
+            throw error
+        }        
+        response.status(200).json(results.rows)
+    })
+}
+
+const deleteRessources = (request, response) => {
+    pool.query('DELETE FROM ressource WHERE "idRessource"=21 RETURNING *', (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.status(200).json(results.rows);
+    })
+}
+
+const updateRessources= (request, response) => {
+    const titreRessource="titre changé";
+    pool.query('UPDATE ressource SET "titreRessource" = $1 WHERE "idRessource"=14 RETURNING "titreRessource" ', [titreRessource], (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.status(200).json(results.rows);
+        // response.redirect('/users')
+    })
+}
 
 module.exports = {
     message,
@@ -112,5 +158,9 @@ module.exports = {
     //createUser,
     updateUsers,
     addUsers,
-    getNbrCommentaires
+    getNbrCommentaires,
+    addRessources,
+    deleteRessources,
+    getRessources,
+    updateRessources
 }
