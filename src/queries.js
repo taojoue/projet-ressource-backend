@@ -20,7 +20,7 @@ const pool = new Pool({
 });
 
 const message = console.log('Test queries.js');
-//////////////////////////////////////////////////////////  U S E R //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////  U S E R S //////////////////////////////////////////////////////////////////////////
 const getUsers = (request, response) => {
     pool.query('SELECT * FROM compte', (error, results) => {
         if (error) {
@@ -30,14 +30,16 @@ const getUsers = (request, response) => {
     })
 }
 
+
 const addUsers = (request, response) => {
     const prenomUtilisateur="Elies";
     const nomUtilisateur="TEST";
     const pseudoUtilisateur="elitesto";
     const mdpUtilisateur="mdptest";
+    const mailUtilisateur="test@test.fr"
     // const mdpCrypte = bcrypt.hashSync(mdpUtilisateur,1);
 
-    pool.query('INSERT INTO compte ("prenomUtilisateur","nomUtilisateur","pseudoUtilisateur","mdpUtilisateur","dateCreationUtilisateur") VALUES ($1,$2,$3,$4,NOW()) RETURNING * ', [prenomUtilisateur,nomUtilisateur,pseudoUtilisateur,mdpUtilisateur], (error, results) => {
+    pool.query('INSERT INTO compte ("prenomUtilisateur","nomUtilisateur","pseudoUtilisateur","mailUtilisateur","mdpUtilisateur","dateCreationUtilisateur") VALUES ($1,$2,$3,$4,$5,NOW()) RETURNING * ', [prenomUtilisateur,nomUtilisateur,pseudoUtilisateur,mailUtilisateur,mdpUtilisateur], (error, results) => {
         if (error) {
             throw error
         }        
@@ -92,7 +94,7 @@ const updateUsers = (request, response) => {
 //         response.redirect('/users');
 //     })
 // }
-//////////////////////////////////////////////////////////  C O M M E N T A I R E /////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////  C O M M E N T A I R E S /////////////////////////////////////////////////////////////////
 const getNbrCommentaires = (request, response) => {
     const idUser="2";
     pool.query('SELECT count(commentaire."idCommentaire") FROM commentaire, compte WHERE compte."idCompte"=$1', [idUser], (error, results) => {
